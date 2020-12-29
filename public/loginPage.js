@@ -1,32 +1,24 @@
 "use strict";
-let userForm = new UserForm(); // создаем объект класса UserForm
+let userForm = new UserForm();
 
-// --- обработка запроса на вход ---
 userForm.loginFormCallback = (data) => {
-    ApiConnector.login({login: data.login, password: data.password}, response => {
-        if (response.success === true)
-        {
-            location.reload(); // обновить страницу в случае успеха запроса 
+    ApiConnector.login(data, response => {
+        if (response.success) {
+            location.reload();
         }
-        else
-        {
-            console.log(response);
-            userForm.setLoginErrorMessage(response.error); // В случае провала запроса выведите ошибку в окно для ошибок
+        else {
+            userForm.setLoginErrorMessage(response.error); 
         }
     });
 }
 
-// --- обработка запроса на регистрацию ---
 userForm.registerFormCallback = (data) => {
-    ApiConnector.register({login: data.login, password: data.password}, response => {
-        if (response.success === true)
-        {
-            location.reload(); // обновить страницу в случае успеха запроса 
+    ApiConnector.register(data, response => {
+        if (response.success) {
+            location.reload(); 
         }
-        else
-        {
-            console.log(response);
-            userForm.setRegisterErrorMessage(response.error); // В случае провала запроса выведите ошибку в окно для ошибок
+        else {
+            userForm.setRegisterErrorMessage(response.error); 
         }
     });
 }
